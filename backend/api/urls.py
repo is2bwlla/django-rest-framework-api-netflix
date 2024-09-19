@@ -15,4 +15,4 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('genre/<int:pk>', views.GenreViews.as_view()),
     path('ageRating/<int:pk>', views.ageRatingViews.as_view()),
-] #+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

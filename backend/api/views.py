@@ -1,11 +1,12 @@
 from django.shortcuts import render                             # renderização que vai ser usada para renderizar/carregar algo no inicio
-from .models import Movies, allGenre, ageRating
-from .serializer import MoviesSerializer, GenreSerializer, ageRatingSerializer
+from .models import Movies, allGenre, ageRating, Image
+from .serializer import MoviesSerializer, GenreSerializer, ageRatingSerializer, ImagesSerializer
 from rest_framework.response import Response                    # impo
 from rest_framework.decorators import api_view                  # é responsável pelos métodos que vc vai usar, get, post
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.parsers import MultiPartParser, FormParser
 
 @api_view(['GET', 'POST'])
 def list_movies(request):                                                                       #listar filmes
@@ -40,6 +41,12 @@ class GenreViews(RetrieveUpdateDestroyAPIView):
 class ageRatingViews(RetrieveUpdateDestroyAPIView):
     queryset = ageRating.objects.all()
     serializer_class = ageRatingSerializer
+
+class imagesViews(ListCreateAPIView):
+    queryset = Image.objects.all()
+    serializer_class = ImagesSerializer
+
+
     
 
     
