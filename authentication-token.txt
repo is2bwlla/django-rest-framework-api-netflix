@@ -1,0 +1,8 @@
+https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html
+
+- seguir o passo a passo e tentar fazer funcionar seja lá o que for pra ele fazer, professor lindomar vai explicar na próxima aula
+
+- usuários:
+
+super user: igorbedon // namoradodaisabella
+user: isabella // namoradadobedon

@@ -1,0 +1,103 @@
+-- database: ../db.sqlite3
+
+SELECT * FROM api_movies;
+
+
+INSERT INTO api_movies (title, genre, year, language, age_rating)
+VALUES
+('A Origem', 'Ficção Científica', '2010', 'Inglês', '13+'),
+('Parasita', 'Suspense', '2019', 'Coreano', '16+'),
+('O Poderoso Chefão', 'Crime', '1972', 'Inglês', '18+'),
+('A Viagem de Chihiro', 'Fantasia', '2001', 'Japonês', '12+'),
+('Matrix', 'Ação', '1999', 'Inglês', '16+'),
+('Interestelar', 'Ficção Científica', '2014', 'Inglês', '10+'),
+('Coringa', 'Drama', '2019', 'Inglês', '18+'),
+('Pulp Fiction: Tempo de Violência', 'Crime', '1994', 'Inglês', '18+'),
+('O Cavaleiro das Trevas', 'Ação', '2008', 'Inglês', '13+'),
+('Vingadores: Ultimato', 'Ação', '2019', 'Inglês', '13+'),
+('Toy Story', 'Animação', '1995', 'Inglês', 'Livre'),
+('Titanic', 'Romance', '1997', 'Inglês', '12+'),
+('A Lista de Schindler', 'Drama', '1993', 'Inglês', '16+'),
+('O Rei Leão', 'Animação', '1994', 'Inglês', 'Livre'),
+('Gladiador', 'Ação', '2000', 'Inglês', '16+'),
+('Um Sonho de Liberdade', 'Drama', '1994', 'Inglês', '16+'),
+('O Silêncio dos Inocentes', 'Suspense', '1991', 'Inglês', '18+'),
+('Forrest Gump: O Contador de Histórias', 'Drama', '1994', 'Inglês', '12+'),
+('Clube da Luta', 'Drama', '1999', 'Inglês', '18+'),
+('O Senhor dos Anéis: A Sociedade do Anel', 'Fantasia', '2001', 'Inglês', '12+'),
+('O Senhor dos Anéis: As Duas Torres', 'Fantasia', '2002', 'Inglês', '12+'),
+('O Senhor dos Anéis: O Retorno do Rei', 'Fantasia', '2003', 'Inglês', '12+'),
+('Star Wars: Uma Nova Esperança', 'Ficção Científica', '1977', 'Inglês', '10+'),
+('Star Wars: O Império Contra-Ataca', 'Ficção Científica', '1980', 'Inglês', '10+'),
+('Star Wars: O Retorno de Jedi', 'Ficção Científica', '1983', 'Inglês', '10+'),
+('Harry Potter e a Pedra Filosofal', 'Fantasia', '2001', 'Inglês', 'Livre'),
+('Harry Potter e a Câmara Secreta', 'Fantasia', '2002', 'Inglês', 'Livre'),
+('Harry Potter e o Prisioneiro de Azkaban', 'Fantasia', '2004', 'Inglês', 'Livre'),
+('Bastardos Inglórios', 'Guerra', '2009', 'Inglês', '18+'),
+('Django Livre', 'Faroeste', '2012', 'Inglês', '18+'),
+('Os Oito Odiados', 'Faroeste', '2015', 'Inglês', '18+'),
+('Mad Max: Estrada da Fúria', 'Ação', '2015', 'Inglês', '16+'),
+('Blade Runner 2049', 'Ficção Científica', '2017', 'Inglês', '16+'),
+('O Exterminador do Futuro', 'Ficção Científica', '1984', 'Inglês', '16+'),
+('O Exterminador do Futuro 2: O Julgamento Final', 'Ficção Científica', '1991', 'Inglês', '16+');
+
+CREATE TABLE allGenre (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    genre VARCHAR(255)
+); -- CRIA A TABELA GENEROS
+
+SELECT * FROM api_allgenre;
+
+-- Inserção dos Dados
+INSERT INTO api_allgenre (genre) VALUES --ADICIONA TODOS OS GENEROS DA COLUNA GENRE DE API_MOVIES NUMA TABELA NOVA
+('Ficção Científica'),
+('Suspense'),
+('Crime'),
+('Fantasia'),
+('Ação'),
+('Drama'),
+('Romance'),
+('Animação'),
+('Guerra'),
+('Faroeste');
+
+UPDATE api_movies SET genre = ''; -- LIMPAMOS A COLUNA DE GENEROS
+
+INSERT INTO api_movies (title, genre_id, year, language, age_rating_id)
+VALUES 
+    ('A Origem', 1, '2010', 'Inglês', 1),
+    ('Matrix', 1, '1999', 'Inglês', 2),
+    ('Parasita', 4, '2019', 'Coreano', 2),
+    ('Interestelar', 1, '2014', 'Inglês', 1),
+    ('O Poderoso Chefão', 5, '1972', 'Inglês', 2),
+    ('Pulp Fiction', 5, '1994', 'Inglês', 2),
+    ('O Cavaleiro das Trevas', 6, '2008', 'Inglês', 1),
+    ('Clube da Luta', 7, '1999', 'Inglês', 2),
+    ('Forrest Gump', 7, '1994', 'Inglês', 1),
+    ('Um Sonho de Liberdade', 7, '1994', 'Inglês', 2),
+    ('Os Vingadores', 6, '2012', 'Inglês', 1),
+    ('O Senhor dos Anéis: A Sociedade do Anel', 3, '2001', 'Inglês', 1),
+    ('Gladiador', 6, '2000', 'Inglês', 2),
+    ('O Rei Leão', 8, '1994', 'Inglês', 3),
+    ('Avatar', 1, '2009', 'Inglês', 1),
+    ('Star Wars: Episódio IV - Uma Nova Esperança', 1, '1977', 'Inglês', 4),
+    ('Titanic', 2, '1997', 'Inglês', 1),
+    ('Os Infiltrados', 5, '2006', 'Inglês', 2),
+    ('Coração Valente', 6, '1995', 'Inglês', 2),
+    ('Amnésia', 4, '2000', 'Inglês', 2),
+    ('Oldboy', 4, '2003', 'Coreano', 2);
+
+UPDATE api_movies SET age_rating = '';
+
+CREATE TABLE api_agerating (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    age_rating VARCHAR(255)
+);
+
+INSERT INTO api_agerating (age_rating) VALUES
+    ('PG-13'),
+    ('R'),
+    ('G'),
+    ('PG');
+
+
