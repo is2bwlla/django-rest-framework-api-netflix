@@ -17,4 +17,3 @@ class Movies(models.Model):                                                     
 
 class Image(models.Model):
     image = models.ImageField(upload_to='poster/', blank=True, null=True)
-    urlImage = models.CharField(max_length=255)

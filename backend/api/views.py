@@ -30,7 +30,7 @@ class MoviesViews(ListCreateAPIView):
     serializer_class = MoviesSerializer
     
 class MoviesDetailView(RetrieveUpdateDestroyAPIView):
-    # permission_classes = [IsAuthenticated]          # vai exigir o token
+    permission_classes = [IsAuthenticated]                                                      # vai exigir o token
     queryset = Movies.objects.all() 
     serializer_class = MoviesSerializer
     
@@ -45,6 +45,15 @@ class ageRatingViews(RetrieveUpdateDestroyAPIView):
 class imagesViews(ListCreateAPIView):
     queryset = Image.objects.all()
     serializer_class = ImagesSerializer
+    parser_classes = (MultiPartParser, FormParser)
+    
+    def post(self, request, format=None):
+        serializer = ImagesSerializer(data=request.data)
+        
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
 
     

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Text, View, TextInput, Pressable } from 'react-native';
 import styles from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as ImagePicker from "expo-image-picker"
 
 export default function Home() {
 
@@ -22,6 +23,11 @@ export default function Home() {
   const [age_rating, setAge] = useState('');
   const [token, setToken] = useState('');
 
+  const [base64, setBase64] = useState(null);
+  const [imageName, setImageName] = useState(null);
+  const [imageSource, setImageSource] = useState('');
+  const [fileNameG, setFileNameG] = useState('')
+
   useEffect(()=>{                                             // faz parte da renderização da tela, ele executa tudo quando a pagina é carregada
     AsyncStorage.getItem('token')
         .then(
@@ -37,7 +43,9 @@ export default function Home() {
                 console.error('Can not saved.', error);
             }
         )
-  }, []); 
+  }, [base64, imageName]);
+  
+  
 
   const capture = async ()=> {
     try {
@@ -174,6 +182,63 @@ export default function Home() {
     }
   }
 
+  // FUNÇÃO DA IMAGEM:
+  const pickImage = async () => {
+    // Abre a galeria para seleção de imagem
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    // Se o usuário não cancelar, executa o upload
+    if (!result.canceled) {
+      const imageName = result.assets[0].fileName || "image.jpg"; // Definir o nome do arquivo
+      const imageUri = result.assets[0].uri;
+      setBase64(imageUri); // Armazena a URI da imagem no estado
+      setImageName(imageName)
+    }
+  };
+
+  // Função de upload da imagem
+  const uploadImage = async (uri, imageName, token) => {
+    let formData = new FormData();
+    formData.append("image", {
+      uri: uri,
+      type: "image/jpeg", // Tipo do arquivo (ajustar conforme necessário)
+      name: imageName, // Nome do arquivo
+    });
+
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/images/",
+        formData,
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log("Imagem enviada com sucesso:", response.data);
+    } catch (error) {
+      console.error(
+        "Erro ao enviar a imagem:",
+        error.response ? error.response.data : error.message
+      );
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <Button title="Pick an image from camera roll" onPress={pickImage} />
+      {image && <Image source={{ uri: image }} style={styles.image} />}
+    </View>
+  );
+}
+
   return (
     <View style={styles.container}>
 
@@ -235,7 +300,11 @@ export default function Home() {
               onChangeText={(e)=>setAgeG(e)}/>
           </View>
 
-          <View style={styles.poster}></View>
+          <View style={styles.poster}>
+            <Image
+              source={{ uri: imageSource}}
+            />
+          </View>
 
         </View>
         
@@ -282,7 +351,11 @@ export default function Home() {
             />
           </View>
 
-          <Pressable style={styles.poster}></Pressable>
+          <Pressable style={styles.poster}>
+            <Image
+              source={{ uri: imageSource}}
+            />
+          </Pressable>
         </View>
 
         <Pressable style={styles.btn} onPress={send}>

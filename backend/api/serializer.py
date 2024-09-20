@@ -20,7 +20,7 @@ class MoviesSerializer(serializers.ModelSerializer):
 class ImagesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Image
-        fields = ['id_image', 'image']
+        fields = ['id', 'image']
         
 
         
